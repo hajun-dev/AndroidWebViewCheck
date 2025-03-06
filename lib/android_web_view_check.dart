@@ -1,7 +1,7 @@
-library AndroidWebViewCheck;
+library android_web_view_check;
 
 import 'dart:io';
-
+import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,23 +24,26 @@ class AndroidWebViewCheck {
         Match? match = regExp.firstMatch(version);
 
         if (match != null) {
-          String majorVersion = match?.group(1) ?? "Unknown";
+          String majorVersion = match.group(1) ?? "Unknown";
           // 엘지폰이고 웹뷰구현 버전이 90대 이하면 (엘지 스마트폰 사업 철수로 인한 대응)
           return map = {"brand": androidInfo.brand, "update": int.parse(majorVersion) < 90 ? true : false, "msg": ""};
         } else {
           return map = {"brand": "", "update": false, "msg": "WebView version not found."};
         }
       } on PlatformException catch (e) {
-        print("Error  WebView version: '${e.message}'.");
-      }
-
-      void updateWebView() async {
-        final url = "https://play.google.com/store/apps/details?id=com.google.android.webview";
-        if (await canLaunch(url)) {
-          await launch(url);
-        }
+        log("Error  WebView version: '${e.message}'.");
       }
     }
     return map;
+  }
+
+  void updateWebView() async {
+    const url = "https://play.google.com/store/apps/details?id=com.google.android.webview";
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
