@@ -1,11 +1,12 @@
 package com.example.android_web_view_check
 
+import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import android.webkit.WebView
 import io.flutter.embedding.android.FlutterFragmentActivity
 
-class WebViewCheckPlugin : FlutterFragmentActivity() {
+class MainActivity : FlutterFragmentActivity() {
     private val CHANNEL = "android_webview_version"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {

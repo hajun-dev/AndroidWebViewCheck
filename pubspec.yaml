@@ -4,7 +4,7 @@ homepage: https://github.com/hajun-dev/AndroidWebViewCheck.git
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 
-version: 1.0.5+6
+version: 1.0.6+7
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -41,11 +41,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-plugin:
-  platforms:
-    android:
-      package: com.example.android_web_view_check
-      pluginClass: WebViewCheckPlugin
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
