@@ -62,10 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void checkDevice() async {
-    Map map = await AndroidWebViewCheck().deviceCheck();
-    print(map);
+    String val = await AndroidWebViewCheck().deviceCheck();
     // 디바이스 WebView 버전을 판단해 90이하면 업데이트 스토어 이동 (90 이하면 웹뷰호출이 안됨)
-    if (map["update"]) {
+    if (val == "Update") {
       AndroidWebViewCheck().updateWebView();
     }
   }

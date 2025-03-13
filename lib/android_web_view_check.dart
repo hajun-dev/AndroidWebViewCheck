@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AndroidWebViewCheck {
-  Future<Map> deviceCheck() async {
-    Map map = {};
+  Future<String> deviceCheck() async {
+    String val = "Available";
     if (Platform.isAndroid) {
       final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       // Android 디바이스 정보 가져오기
@@ -26,15 +26,19 @@ class AndroidWebViewCheck {
         if (match != null) {
           String majorVersion = match.group(1) ?? "Unknown";
           // 엘지폰이고 웹뷰구현 버전이 90대 이하면 (엘지 스마트폰 사업 철수로 인한 대응)
-          return map = {"brand": androidInfo.brand, "update": int.parse(majorVersion) < 90 ? true : false, "msg": ""};
-        } else {
-          return map = {"brand": "", "update": false, "msg": "WebView version not found."};
+          bool flag = int.parse(majorVersion) < 90 ? true : false;
+          if (androidInfo.brand == "lge" && flag) {
+            val = "Not available";
+          } else if (flag) {
+            val = "Update";
+          }
+          return val;
         }
       } on PlatformException catch (e) {
         log("Error  WebView version: '${e.message}'.");
       }
     }
-    return map;
+    return val;
   }
 
   void updateWebView() async {
